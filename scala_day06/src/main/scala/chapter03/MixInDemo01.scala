@@ -16,7 +16,7 @@ object MixInDemo01 {
     //混入多个特质
     val mySQL = new MySQL3 with Operator3 with Operator02
     mySQL.insert(100)
-    println(mySQL.sum(2,2))
+    println(mySQL.sum(1,2))
     //如有抽象方法，如何动态混入特质
     val mysql_ = new MySQL3_ with Operator3 {
       override def say(): Unit ={
