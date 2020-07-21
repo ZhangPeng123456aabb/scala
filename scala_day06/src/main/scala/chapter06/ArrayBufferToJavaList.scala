@@ -16,5 +16,16 @@ object ArrayBufferToJavaList {
     val arrList = javaArr.command()
     //输出结果:[1, 2, 3, 4]
     println(arrList)
+
+    println("************************")
+    //1.asScalaBuffer是一个隐式函数
+    import scala.collection.JavaConversions.asScalaBuffer
+    import scala.collection.mutable
+    //java.util.List ==>Buffer
+    val scalaArr:mutable.Buffer[String]=arrList
+    scalaArr.append("jack")
+    //删除
+    scalaArr.remove(0)
+    println(scalaArr)
   }
 }
