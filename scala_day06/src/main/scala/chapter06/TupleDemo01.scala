@@ -16,6 +16,7 @@ object TupleDemo01 {
     val tuple1 = (1,2,3,"hello",4)
     println(tuple1)
 
+
     //访问元组
     val t1 = (1,"a","b",true,2)
     println(t1._1)//访问元组的第一个元素
