@@ -4,6 +4,14 @@ object HighOrderFunDemo01 {
   def main(args: Array[String]): Unit = {
     val res = test(sum2,3.5)
     println("res="+res)
+
+    //在scala中，可以把一个函数直接赋予给一个变量,但是不执行函数
+//    val f1 = myPrint()  错误写法
+    val f1 = myPrint _
+    f1()
+  }
+  def myPrint():Unit={
+    println("hello,world")
   }
 
   /**
