@@ -45,6 +45,7 @@ object CaseClassDemo03 {
 }
 //设计样例类
 abstract class Item//项
+//abstract sealed class Item //密封类 在同包下继承会报错
 case class Book(description: String,price: Double)extends Item
 case class Food(description: String,price: Double)extends Item
 //Bundle 捆,discount:Double 折扣，item:Item* ,
