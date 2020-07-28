@@ -16,7 +16,12 @@ class SayHelloActor extends Actor {
     */
   override def receive: Receive = {
     case "hello" => println("收到hello,回应hello too:)")
-    case "ok" => println("回应ok too:)")
+    case "ok" => println("收到ok,回应ok too:)")
+    case "exit" => {
+      println("接收到exit指令，退出系统")
+      context.stop(self) //退出actorRef
+      context.system.terminate()//退出ActorSystem
+    }
     case _ => println("匹配不到")
   }
 }
@@ -31,11 +36,16 @@ object SayHelloActor{
     * (1)Props[SayHelloActor]创建一个SayHelloActor实例，使用反射
     * (2)"sayHelloActor"给actor取名
     * (3)sayHelloActorRef:ActorRef就是Props[SayHelloActor]的ActorRef
+    * (4)创建SayHelloActor 实例被
     */
   private val sayHelloActorRef: ActorRef = actoryFactory.actorOf(Props[SayHelloActor],"SayHelloActor")
 
   def main(args: Array[String]): Unit = {
     //给SayHelloActor发消息(发邮箱)
-    sayHelloActorRef ! "Hello"
+    sayHelloActorRef ! "hello"
+    sayHelloActorRef ! "ok"
+    sayHelloActorRef ! "ok~"
+    //研究如何退出ActorSystem
+    sayHelloActorRef ! "exit"
   }
 }
