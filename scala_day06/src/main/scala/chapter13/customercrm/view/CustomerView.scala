@@ -2,7 +2,7 @@ package chapter13.customercrm.view
 
 import chapter13.customercrm.bean.Customer
 import chapter13.customercrm.service.CustomerService
-
+import util.control.Breaks._
 import scala.io.StdIn
 
 class CustomerView {
@@ -70,7 +70,17 @@ class CustomerView {
       return
     }
     println("确认是否删除[Y/N]：")
-    val choice = StdIn.readChar().toLower
+    //要求用户在退出时提示"确认是否退出(Y/N)：",用户必须输入y/n,否则循环提示
+    var choice = ' '
+    breakable{
+      do{
+        choice = StdIn.readChar().toLower
+        if(choice == 'y' || choice == 'n'){
+          break()
+        }
+        println("确认是否删除(Y/N): ")
+      }while(true)
+    }
     if(choice == 'y'){
       if(CustomerService.del(id)){
         println("---------------删除完成------------------------")
