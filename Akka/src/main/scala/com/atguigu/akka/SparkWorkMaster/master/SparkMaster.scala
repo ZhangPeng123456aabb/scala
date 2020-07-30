@@ -64,16 +64,24 @@ class SparkMaster extends Actor {
 }
 object SparkMaster{
   def main(args: Array[String]): Unit = {
+    //这里我们分析出有3个host,port,sparkMasterActor
+    if(args.length != 3){
+      println("请输入参数 host port sparkMasterActor名字")
+      sys.exit()
+    }
+    val host = args(0)
+    val port = args(1)
+    val name = args(2)
     //先创建ActorSystem
     val config = ConfigFactory.parseString(
       s"""
          |akka.actor.provider="akka.remote.RemoteActorRefProvider"
-         |akka.remote.netty.tcp.hostname=127.0.0.1
-         |akka.remote.netty.tcp.port=10005
+         |akka.remote.netty.tcp.hostname=${host}
+         |akka.remote.netty.tcp.port=${port}
        """.stripMargin
     )
     val sparkMasterSystem = ActorSystem("SparkMaster",config)
-    val sparkMasterRef = sparkMasterSystem.actorOf(Props[SparkMaster],"SparkMaster-01")
+    val sparkMasterRef = sparkMasterSystem.actorOf(Props[SparkMaster],s"$name")
     //启动SparkMaster
     sparkMasterRef ! "start"
   }
